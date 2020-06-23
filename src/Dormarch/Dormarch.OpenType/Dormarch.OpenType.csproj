@@ -7,6 +7,12 @@
     <Authors>Will Salt</Authors>
     <Copyright>Copyright © 2020 Will Salt</Copyright>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).Tests.Unit</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">

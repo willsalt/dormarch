@@ -1,0 +1,35 @@
+﻿@page "/view"
+@using System.IO; 
+@inject Blazor.FileReader.IFileReaderService fileReaderService;
+
+<h1>View File</h1>
+
+<input type="file" @ref=fileSelectElement />
+<button @onclick=ReadFile>Read file</button>
+
+@if (string.IsNullOrEmpty(fileContents))
+{
+    <p><em>[no data]</em></p>
+}
+else
+{
+    <p>@fileContents</p>
+}
+@code {
+    private string fileContents;
+    private ElementReference fileSelectElement;
+
+    public async Task ReadFile()
+    {
+        foreach (var file in await fileReaderService.CreateReference(fileSelectElement).EnumerateFilesAsync())
+        {
+            using (MemoryStream memoryStream = await file.CreateMemoryStreamAsync(4096))
+            {
+                byte[] buffer = new byte[8192];
+                memoryStream.Read(buffer, 0, 8192);
+                fileContents = System.Text.Encoding.UTF8.GetString(buffer);
+            }
+            StateHasChanged();
+        }
+    }
+}

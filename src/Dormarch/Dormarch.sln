@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dormarch.OpenType", "Dormarch.OpenType\Dormarch.OpenType.csproj", "{48118CFE-F5FE-4A16-B9D1-505C3A10EFE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dormarch.OpenType", "Dormarch.OpenType\Dormarch.OpenType.csproj", "{48118CFE-F5FE-4A16-B9D1-505C3A10EFE4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5601B91D-0BA3-454F-9C9F-21BF8566B331}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{86B7E626-DBD6-4CC9-81B0-2BAB6802B50A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dormarch.OpenType.Tests.Unit", "Dormarch.OpenType.Tests.Unit\Dormarch.OpenType.Tests.Unit.csproj", "{B83B066D-4660-4E15-8ACA-F1410CE561E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dormarch.OpenType.Tests.Unit", "Dormarch.OpenType.Tests.Unit\Dormarch.OpenType.Tests.Unit.csproj", "{B83B066D-4660-4E15-8ACA-F1410CE561E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Utility", "Tests.Utility\Tests.Utility.csproj", "{66A6BC16-FFC3-48B3-9BBA-057EAA8F830D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Utility", "Tests.Utility\Tests.Utility.csproj", "{66A6BC16-FFC3-48B3-9BBA-057EAA8F830D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dormarch", "Dormarch\Dormarch.csproj", "{5384AC79-85B0-4F0B-9FC4-2890AD43D64D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{66A6BC16-FFC3-48B3-9BBA-057EAA8F830D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66A6BC16-FFC3-48B3-9BBA-057EAA8F830D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66A6BC16-FFC3-48B3-9BBA-057EAA8F830D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5384AC79-85B0-4F0B-9FC4-2890AD43D64D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5384AC79-85B0-4F0B-9FC4-2890AD43D64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5384AC79-85B0-4F0B-9FC4-2890AD43D64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5384AC79-85B0-4F0B-9FC4-2890AD43D64D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

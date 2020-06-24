@@ -79,6 +79,24 @@ namespace Dormarch.OpenType {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Memory-mapped file has been closed..
+        /// </summary>
+        internal static string FileHandling_MappedFileAccessor_AccessAfterDisposeError {
+            get {
+                return ResourceManager.GetString("FileHandling_MappedFileAccessor_AccessAfterDisposeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Streamed file contents have been disposed of..
+        /// </summary>
+        internal static string FileHandling_StreamedFileAccessor_AccessAfterDisposeError {
+            get {
+                return ResourceManager.GetString("FileHandling_StreamedFileAccessor_AccessAfterDisposeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insufficient data to load &apos;head&apos; table..
         /// </summary>
         internal static string HeaderTable_FromBytes_InsufficientDataError {

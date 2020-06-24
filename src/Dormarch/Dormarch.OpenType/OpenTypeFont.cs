@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using Dormarch.OpenType.Extensions;
+using Dormarch.OpenType.FileHandling;
 using Dormarch.OpenType.Interfaces;
 
 namespace Dormarch.OpenType
@@ -14,8 +16,7 @@ namespace Dormarch.OpenType
     /// </summary>
     public class OpenTypeFont : IDisposable, IOpenTypeFont
     {
-        private MemoryMappedFile _mmf;
-        private MemoryMappedViewAccessor _accessor;
+        private IDataAccessor _accessor;
 
         /// <summary>
         /// The full path of the file this font was loaded from.
@@ -143,15 +144,27 @@ namespace Dormarch.OpenType
         /// <param name="mmf">The memory-mapped file to load data from.</param>
         /// <param name="fn">The full path of the file this font was loaded from.</param>
         /// <returns>A font object.</returns>
-        public OpenTypeFont(MemoryMappedFile mmf, string fn)
+        public OpenTypeFont(MemoryMappedFile mmf, string fn) : this (new MappedFileAccessor(mmf), fn)
         {
-            if (mmf is null)
+        }
+
+        public OpenTypeFont(MemoryStream str, string fn) : this(new StreamedFileAccessor(str), fn)
+        {
+        }
+
+        public OpenTypeFont(IDataAccessor data, string fn)
+        {
+            if (data is null)
             {
-                throw new ArgumentNullException(nameof(mmf));
+                throw new ArgumentNullException(nameof(data));
             }
             Filename = fn;
-            _mmf = mmf;
-            _accessor = _mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
+            _accessor = data;
+            Initialise();
+        }
+
+        private void Initialise()
+        {
             OffsetHeader = LoadOffsetTable(_accessor);
             long offset = 12;
             for (int i = 0; i < OffsetHeader.TableCount; ++i)
@@ -161,7 +174,7 @@ namespace Dormarch.OpenType
             }
         }
 
-        private static OffsetTable LoadOffsetTable(MemoryMappedViewAccessor accessor)
+        private static OffsetTable LoadOffsetTable(IDataAccessor accessor)
         {
             FontKind fontKind;
             ushort tableCount, searchRange, entrySelector, rangeShift;
@@ -192,7 +205,7 @@ namespace Dormarch.OpenType
             return new OffsetTable(fontKind, tableCount, searchRange, entrySelector, rangeShift);
         }
 
-        private TableIndexRecord LoadTableRecord(MemoryMappedViewAccessor accessor, long offset)
+        private TableIndexRecord LoadTableRecord(IDataAccessor accessor, long offset)
         {
             byte[] buffer = new byte[4];
             Tag tableTag;
@@ -379,8 +392,6 @@ namespace Dormarch.OpenType
             {
                 if (disposing)
                 {
-                    _mmf?.Dispose();
-                    _mmf = null;
                     _accessor?.Dispose();
                     _accessor = null;
                 }

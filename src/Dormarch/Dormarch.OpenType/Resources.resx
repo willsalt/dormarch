@@ -123,6 +123,12 @@
   <data name="Extensions_ByteArrayExtensions_ToDateTime_OutOfRangeError" xml:space="preserve">
     <value>Encoded value is too large to be converted to a timestamp.</value>
   </data>
+  <data name="FileHandling_MappedFileAccessor_AccessAfterDisposeError" xml:space="preserve">
+    <value>Memory-mapped file has been closed.</value>
+  </data>
+  <data name="FileHandling_StreamedFileAccessor_AccessAfterDisposeError" xml:space="preserve">
+    <value>Streamed file contents have been disposed of.</value>
+  </data>
   <data name="HeaderTable_FromBytes_InsufficientDataError" xml:space="preserve">
     <value>Insufficient data to load 'head' table.</value>
   </data>

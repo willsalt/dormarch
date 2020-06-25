@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dormarch.OpenType.Tests.Uni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Utility", "Tests.Utility\Tests.Utility.csproj", "{66A6BC16-FFC3-48B3-9BBA-057EAA8F830D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dormarch", "Dormarch\Dormarch.csproj", "{5384AC79-85B0-4F0B-9FC4-2890AD43D64D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dormarch", "Dormarch\Dormarch.csproj", "{5384AC79-85B0-4F0B-9FC4-2890AD43D64D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

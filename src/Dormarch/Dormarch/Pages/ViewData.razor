@@ -1,5 +1,7 @@
 ﻿@page "/view"
 @using System.IO; 
+@using Dormarch.OpenType;
+@implements IDisposable;  
 @inject Blazor.FileReader.IFileReaderService fileReaderService;
 
 <h1>View File</h1>
@@ -7,29 +9,52 @@
 <input type="file" @ref=fileSelectElement />
 <button @onclick=ReadFile>Read file</button>
 
-@if (string.IsNullOrEmpty(fileContents))
+@if (font is null)
 {
-    <p><em>[no data]</em></p>
+    <p><em>[no font loaded]</em></p>
 }
 else
 {
-    <p>@fileContents</p>
+    <p>@FontName()</p>
+    <FontTableList Data=@font />
 }
 @code {
-    private string fileContents;
+    private OpenTypeFont font;
     private ElementReference fileSelectElement;
 
     public async Task ReadFile()
     {
         foreach (var file in await fileReaderService.CreateReference(fileSelectElement).EnumerateFilesAsync())
         {
-            using (MemoryStream memoryStream = await file.CreateMemoryStreamAsync(4096))
+            if (font != null)
             {
-                byte[] buffer = new byte[8192];
-                memoryStream.Read(buffer, 0, 8192);
-                fileContents = System.Text.Encoding.UTF8.GetString(buffer);
+                font.Dispose();
+                font = null;
             }
+            string fn = (await file.ReadFileInfoAsync()).Name;
+            MemoryStream memoryStream = await file.CreateMemoryStreamAsync();
+            font = new OpenTypeFont(memoryStream, fn);
             StateHasChanged();
         }
+    }
+
+    private string FontName()
+    {
+        if (font is null)
+        {
+            return "";
+        }
+        NameRecord psName = font.Naming.Search(NameField.PostScriptName).FirstOrDefault();
+        if (psName is null)
+        {
+            psName = font.Naming.Search(NameField.Family).FirstOrDefault();
+        }
+        return psName?.Content;
+    }
+
+    public void Dispose()
+    {
+        font?.Dispose();
+        font = null;
     }
 }

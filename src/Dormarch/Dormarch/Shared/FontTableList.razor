@@ -1,0 +1,35 @@
+﻿@using Dormarch.OpenType;
+
+<h3>Font Contents</h3>
+
+<table>
+    <tr>
+        <th>Tag</th>
+        <th>Position</th>
+        <th>Length</th>
+        <th>Checksum</th>
+    </tr>
+    @foreach (TableIndexRecord record in GetTableIndexRecords())
+    {
+        <tr>
+            <td>@record.TableTag</td>
+            <td>@record.Offset</td>
+            <td>@record.Length</td>
+            <td>@record.Checksum</td>
+        </tr>
+    }
+</table>
+
+@code {
+    [Parameter]
+    public OpenTypeFont Data { get; set; }
+
+    private IEnumerable<TableIndexRecord> GetTableIndexRecords()
+    {
+        if (Data is null)
+        {
+            return Array.Empty<TableIndexRecord>();
+        }
+        return Data.TableIndex.Values.OrderBy(r => r.Offset);
+    }
+}

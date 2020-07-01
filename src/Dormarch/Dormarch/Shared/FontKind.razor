@@ -1,0 +1,25 @@
+﻿@using Dormarch.OpenType
+
+    <p>@GetText()</p>
+
+@code {
+    [Parameter]
+    public OpenTypeFont Data { get; set; }
+
+    private string GetText()
+    {
+        if (Data?.OffsetHeader is null)
+        {
+            return "";
+        }
+        switch (Data.OffsetHeader.FontKind)
+        {
+            case Dormarch.OpenType.FontKind.TrueType:
+                return "This font has TrueType outlines.";
+            case Dormarch.OpenType.FontKind.Cff:
+                return "This font has Type 1 outlines.";
+            default:
+                return $"This font has an unknown data type ({(int)Data.OffsetHeader.FontKind}";
+        }
+    }
+}

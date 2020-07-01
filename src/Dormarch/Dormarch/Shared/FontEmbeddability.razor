@@ -1,0 +1,48 @@
+﻿@using Dormarch.OpenType
+
+<p>@GetText()</p>
+
+@code {
+    [Parameter]
+    public OpenTypeFont Data { get; set; }
+
+    private string GetText()
+    {
+        if (Data?.OS2Metrics.EmbeddingPermissions is null)
+        {
+            return "";
+        }
+        string text = "";
+        EmbeddingPermissionsFlags lowBits = Data.OS2Metrics.EmbeddingPermissions & (EmbeddingPermissionsFlags)0xf;
+        switch (lowBits)
+        {
+            case EmbeddingPermissionsFlags.Installable:
+                text = "This font may be embedded and installed on other systems.  ";
+                break;
+            case EmbeddingPermissionsFlags.Restricted:
+                text = "This font cannot be embedded without explicit permission.  ";
+                break;
+            case EmbeddingPermissionsFlags.Printing:
+                text = "This font may be embedded for read-only viewing and printing.  ";
+                break;
+            case EmbeddingPermissionsFlags.Editable:
+                text = "This font may be embedded in editable documents.  ";
+                break;
+            default:
+                return $"This font has an invalid embedding permissions value ({(int)Data.OS2Metrics.EmbeddingPermissions})";
+        }
+        if (Data.OS2Metrics.EmbeddingPermissions.HasFlag(EmbeddingPermissionsFlags.BitmapOnly))
+        {
+            text += "Only bitmaps from the font may be embedded, not glyph outlines.  ";
+        }
+        if (Data.OS2Metrics.EmbeddingPermissions.HasFlag(EmbeddingPermissionsFlags.NoSubsetting))
+        {
+            text += "The entire font must be embedded.";
+        }
+        else
+        {
+            text += "You may embed the entire font, or only the characters the document needs.";
+        }
+        return text;
+    }
+}
